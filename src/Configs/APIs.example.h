@@ -21,5 +21,8 @@
 #define HINDLE_NTP_SERVER_0 "time.apple.com"
 #define HINDLE_NTP_SERVER_1 "time.pool.aliyun.com"
 
+/* FIXME: change to read NVRAM later */
+#define HINDLE_TEMP_WIFI_SSID "go-grab-your-own"
+#define HINDLE_TEMP_WIFI_PASSWD "who-the-hell-knows"
 
 #endif //HINDLE_APIS_H
