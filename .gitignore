@@ -3,6 +3,7 @@
 .piolibdeps
 CMakeListsPrivate.txt
 CMakeLists.txt
+.idea/*
 
 ### Windows template
 # Windows thumbnail cache files
@@ -196,3 +197,7 @@ dkms.conf
 *.lai
 
 # Executables
+
+### Hindle sensitive data
+# Files contains API Keys
+/src/Configs/APIs.h
