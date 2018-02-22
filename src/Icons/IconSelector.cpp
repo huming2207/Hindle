@@ -5,7 +5,7 @@
 #include "IconSelector.h"
 
 
-const char *IconSelector::selectWeatherIcon(uint8_t icon)
+const uint8_t *IconSelector::selectWeatherIcon(uint8_t icon)
 {
   switch(icon){
     case 1: return HINDLE_ICON_SUNNY;
