@@ -4,7 +4,7 @@
 #include <ctime>
 
 #include "UIHelper.h"
-#include "WeatherHelper.h"
+#include "Network/Weather.h"
 #include "Icons/IconSelector.h"
 
 void UIHelper::init(U8G2_IL3820_V2_296X128_F_4W_SW_SPI *main_u8g2)

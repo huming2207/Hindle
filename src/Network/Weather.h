@@ -17,10 +17,10 @@ typedef struct WeatherInfo
   int16_t httpStatus;
 } weather_t;
 
-class WeatherHelper
+class Weather
 {
  public:
-  weather_t fetchWeather();
+  static weather_t fetchWeather();
 };
 
 

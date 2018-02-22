@@ -8,9 +8,9 @@
 #include <Configs/Defaults.h>
 #include <Configs/APIs.h>
 
-#include "TimeHelper.h"
+#include "Time.h"
 
-bool TimeHelper::setTime()
+bool SntpTime::setTime()
 {
   // FIXME: use NVRAM settings
   configTzTime(HINDLE_DEFAULT_TIMEZONE,
@@ -18,7 +18,7 @@ bool TimeHelper::setTime()
                HINDLE_NTP_SERVER_1);
 }
 
-time_t TimeHelper::parseIsoTimeStr(const char *timeStr)
+time_t SntpTime::parseIsoTimeStr(const char *timeStr)
 {
   if(!timeStr) {
     return false;

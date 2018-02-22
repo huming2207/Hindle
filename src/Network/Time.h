@@ -5,7 +5,7 @@
 #ifndef HINDLE_TIMEHELPER_H
 #define HINDLE_TIMEHELPER_H
 
-class TimeHelper
+class SntpTime
 {
  public:
   static bool setTime();

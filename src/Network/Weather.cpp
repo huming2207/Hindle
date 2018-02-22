@@ -6,9 +6,9 @@
 #include <ArduinoJson.h>
 #include <Configs/APIs.h>
 #include <Configs/Defaults.h>
-#include "WeatherHelper.h"
+#include "Weather.h"
 
-weather_t WeatherHelper::fetchWeather()
+weather_t Weather::fetchWeather()
 {
   HTTPClient httpClient;
   weather_t weatherInfo = {};

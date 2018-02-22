@@ -6,7 +6,7 @@
 #define HINDLE_UIHELPER_H
 
 #include <U8g2lib.h>
-#include "WeatherHelper.h"
+#include "Network/Weather.h"
 
 class UIHelper
 {
