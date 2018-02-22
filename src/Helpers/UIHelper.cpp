@@ -1,10 +1,11 @@
 //
 // Created by Ming Hu on 14/2/18.
 //
+#include <ctime>
 
 #include "UIHelper.h"
 #include "WeatherHelper.h"
-#include <ctime>
+#include "Icons/IconSelector.h"
 
 void UIHelper::init(U8G2_IL3820_V2_296X128_F_4W_SW_SPI *main_u8g2)
 {
@@ -15,15 +16,15 @@ void UIHelper::init(U8G2_IL3820_V2_296X128_F_4W_SW_SPI *main_u8g2)
 
   // Enable support for CJK fonts
   u8g2->enableUTF8Print();
+
+  // Draw vertical line between date/time area and event area
+  u8g2->clearBuffer();
+  u8g2->drawVLine(112, 0, 128);
 }
 
 void UIHelper::updateSyncTime()
 {
   char timeBuf[60] = {'\0'};
-
-  // Draw vertical line between date/time area and event area
-  u8g2->clearBuffer();
-  u8g2->drawVLine(100, 0, 128);
 
   // Get time
   struct std::tm curr_time;
@@ -41,11 +42,14 @@ void UIHelper::updateSyncTime()
 
 void UIHelper::updateWeather(weather_t *weather)
 {
+  // 3 hour forecast
   u8g2->setFont(u8g2_font_wqy12_t_gb2312);
-  u8g2->setCursor(0,20);
-  u8g2->printf("3hr: %s", weather->currDescription);
-  u8g2->setCursor(0,40);
-  u8g2->printf("%d-%d ℃, %d %%", weather->currLowTemp, weather->currHighTemp, weather->currHumidity);
+  u8g2->setCursor(40,15);
+  u8g2->printf("%s", weather->brief);
+  u8g2->setCursor(40,27);
+  u8g2->printf("%d/%d°C %d%%", weather->lowTemp, weather->highTemp, weather->humidity);
+  u8g2->drawXBM(0, 0, 32, 32, IconSelector::selectWeatherIcon(weather->statusCode));
+
   u8g2->sendBuffer();
 }
 

@@ -16,7 +16,6 @@ class UIHelper
   void updateWeather(weather_t *weather);
  private:
   U8G2_IL3820_V2_296X128_F_4W_SW_SPI *u8g2;
-
 };
 
 #endif //HINDLE_UIHELPER_H

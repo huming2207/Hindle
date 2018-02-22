@@ -9,18 +9,11 @@
 
 typedef struct WeatherInfo
 {
-  const char *currIcon;
-  const char *nextIcon;
-  const char *currDescription;
-  const char *nextDescription;
-  int16_t currHighTemp;
-  int16_t nextHighTemp;
-  int16_t currLowTemp;
-  int16_t nextLowTemp;
-  uint8_t currHumidity;
-  uint8_t nextHumidity;
-  uint8_t currCode;
-  uint8_t nextCode;
+  const char *brief;
+  int16_t highTemp;
+  int16_t lowTemp;
+  uint8_t humidity;
+  uint8_t statusCode;
   int16_t httpStatus;
 } weather_t;
 

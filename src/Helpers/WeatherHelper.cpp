@@ -34,7 +34,7 @@ weather_t WeatherHelper::fetchWeather()
   // Grab the string and parse json
   log_i("Finished downloading JSON data, prepare to parse...");
   DynamicJsonBuffer jsonBuffer;
-  JsonObject& jsonObject = jsonBuffer.parseObject(httpClient.getString());
+  JsonObject& jsonObject = jsonBuffer.parseObject(httpClient.getStream());
 
   // Detect JSON parsing error
   if(!jsonObject.success()) {
@@ -46,16 +46,11 @@ weather_t WeatherHelper::fetchWeather()
   }
 
   // Put data to info struct
-  weatherInfo.currDescription = jsonObject["list"][0]["weather"][0]["main"];
-  weatherInfo.currCode        = (uint8_t)jsonObject["list"][0]["weather"][0]["main"].as<String>().toInt();
-  weatherInfo.currHighTemp    = jsonObject["list"][0]["main"]["temp_max"];
-  weatherInfo.currLowTemp     = jsonObject["list"][0]["main"]["temp_min"];
-  weatherInfo.currHumidity    = jsonObject["list"][0]["main"]["humidity"];
-  weatherInfo.nextDescription = jsonObject["list"][7]["weather"][0]["main"];
-  weatherInfo.nextCode        = (uint8_t)jsonObject["list"][7]["weather"][0]["main"].as<String>().toInt();
-  weatherInfo.nextHighTemp    = jsonObject["list"][7]["main"]["temp_max"];
-  weatherInfo.nextLowTemp     = jsonObject["list"][7]["main"]["temp_min"];
-  weatherInfo.nextHumidity    = jsonObject["list"][7]["main"]["humidity"];
+  weatherInfo.brief = jsonObject["list"][0]["weather"][0]["main"];
+  weatherInfo.statusCode        = (uint8_t)jsonObject["list"][0]["weather"][0]["icon"].as<String>().toInt();
+  weatherInfo.highTemp    = jsonObject["list"][0]["main"]["temp_max"];
+  weatherInfo.lowTemp     = jsonObject["list"][0]["main"]["temp_min"];
+  weatherInfo.humidity    = jsonObject["list"][0]["main"]["humidity"];
 
   httpClient.end();
   jsonBuffer.clear();
