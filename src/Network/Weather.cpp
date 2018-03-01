@@ -16,7 +16,7 @@ weather_t Weather::fetchWeather()
   // Prepare a new URL
   auto owmUrl = String(HINDLE_API_OWM_BASE)
       + "&q=" + HINDLE_DEFAULT_LOCATION
-      + "&appid=" + HDNLIE_API_OWM_KEY;
+      + "&appid=" + HINDLE_API_OWM_KEY;
 
   httpClient.begin(owmUrl);
 
