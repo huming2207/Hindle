@@ -46,7 +46,8 @@ void UIHelper::updateWeather(weather_t *weather)
   // 3 hour forecast
   u8g2->setFont(u8g2_font_wqy12_t_gb2312);
   u8g2->setCursor(40,15);
-  u8g2->printf("%s", weather->brief);
+  log_i("weather->brief: %s", weather->brief.c_str());
+  u8g2->printf("%s", weather->brief.c_str());
   u8g2->setCursor(40,27);
   u8g2->printf("%d/%d°C %d%%", weather->lowTemp, weather->highTemp, weather->humidity);
   u8g2->drawXBM(0, 0, 32, 32, IconSelector::selectWeatherIcon(weather->statusCode));
@@ -56,14 +57,14 @@ void UIHelper::updateWeather(weather_t *weather)
 
 void UIHelper::updatePtv(transport_t *transport)
 {
-  char timeBuf[60] = {'\0'};
+  char timeBuf[6] = {'\0'};
 
   u8g2->setFont(u8g2_font_wqy12_t_gb2312);
   u8g2->setCursor(0,40);
   u8g2->printf("Platform %d", transport->firstPlatform);
   u8g2->setCursor(0,53);
 
-  strftime(timeBuf, 60, "at %D %R", &transport->firstTime);
+  strftime(timeBuf, 6, "%R", &transport->firstTime);
   u8g2->print(timeBuf);
 
   u8g2->sendBuffer();

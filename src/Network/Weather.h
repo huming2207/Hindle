@@ -9,7 +9,7 @@
 
 typedef struct WeatherInfo
 {
-  const char *brief;
+  String brief;
   int16_t highTemp;
   int16_t lowTemp;
   uint8_t humidity;

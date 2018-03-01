@@ -29,13 +29,21 @@ void setup()
 
   SntpTime::setTime();
   weather_t weather = Weather::fetchWeather();
+  transport_t transport = Ptv::fetchTransportInfo();
 
   helper.init(&u8g2);
   helper.updateSyncTime();
+  helper.updatePtv(&transport);
   helper.updateWeather(&weather);
 }
 
 void loop()
 {
-  delay(1000);
+  // When user presses Ctrl-C, it should reboots.
+  if(Serial.available() > 0) {
+    if(Serial.read() == 3) {
+      log_w("Will now restart!");
+      ESP.restart();
+    }
+  }
 }

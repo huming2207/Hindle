@@ -46,7 +46,7 @@ weather_t Weather::fetchWeather()
   }
 
   // Put data to info struct
-  weatherInfo.brief = jsonObject["list"][0]["weather"][0]["main"];
+  weatherInfo.brief = jsonObject["list"][0]["weather"][0]["main"].as<String>();
   weatherInfo.statusCode        = (uint8_t)jsonObject["list"][0]["weather"][0]["icon"].as<String>().toInt();
   weatherInfo.highTemp    = jsonObject["list"][0]["main"]["temp_max"];
   weatherInfo.lowTemp     = jsonObject["list"][0]["main"]["temp_min"];
