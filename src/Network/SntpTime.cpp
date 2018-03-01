@@ -25,11 +25,11 @@ time_t SntpTime::parseIsoTimeStr(String timeStr)
     return 0;
   }
 
-  auto tm = SntpTime::parseIsoTimeStrToTm(std::move(timeStr));
+  auto tm = SntpTime::parseTimeStrToTm(std::move(timeStr));
   return mktime(&tm);
 }
 
-struct std::tm SntpTime::parseIsoTimeStrToTm(String timeStr)
+struct std::tm SntpTime::parseTimeStrToTm(String timeStr)
 {
   if(!timeStr) {
     struct std::tm emptyTm;

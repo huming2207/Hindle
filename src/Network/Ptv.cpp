@@ -26,11 +26,15 @@ transport_t Ptv::fetchTransportInfo()
   String signature = calculateSignature(queryPath, HINDLE_API_PTV_KEY);
 
   // Now it should be "/v3/departures/route_type/0/stop/11101?devid=100100"
-  String fullUrl = queryPath + "&signature=" + signature;
+  String fullUrl = String(HINDLE_API_PTV_BASE)
+                      + queryPath
+                      + "&signature="
+                      + signature;
   log_i("Full URL: %s", fullUrl.c_str());
+  httpClient.begin(fullUrl);
 
   // Finally, fire the HTTP client and JSON parser
-  int httpStatus = httpClient.begin(fullUrl);
+  int httpStatus = httpClient.GET();
 
   // Detect error
   if(httpStatus < 0) {
@@ -72,8 +76,8 @@ transport_t Ptv::fetchTransportInfo()
       .hasDisruption = (jsonObject["disruptions"].as<JsonArray&>().size() > 0),
       .firstPlatform = (uint8_t)jsonObject["departures"][0]["platform_number"].as<unsigned short>(),
       .secondPlatform = (uint8_t)jsonObject["departures"][1]["platform_number"].as<unsigned short>(),
-      .firstTime = SntpTime::parseIsoTimeStrToTm(firstTimeStr),
-      .secondTime = SntpTime::parseIsoTimeStrToTm(secondTimeStr),
+      .firstTime = SntpTime::parseTimeStrToTm(firstTimeStr),
+      .secondTime = SntpTime::parseTimeStrToTm(secondTimeStr),
   };
 
   httpClient.end();
@@ -97,13 +101,14 @@ String Ptv::calculateSignature(String queryPath, const char * apiKey)
 {
   log_i("Query URL path: %s", queryPath.c_str());
   unsigned char hashResult[20];
+  memset(&hashResult, '\0', 20);
 
   // Calculate HMAC-SHA1 hash with mbedtls
   int ret = mbedtls_md_hmac(mbedtls_md_info_from_type(MBEDTLS_MD_SHA1),   // Type: HMAC-SHA1
                             (const uint8_t *)apiKey,                      // Key: API Key
-                            sizeof(apiKey),                               // Key size
+                            strlen(apiKey),                               // Key size
                             (const unsigned char*)queryPath.c_str(),      // Data: PTV API query URL payload
-                            sizeof(queryPath.c_str()),                    // Data size
+                            queryPath.length(),                           // Data size
                             hashResult);                                  // Result to hashResult
 
   if(ret != 0) {
@@ -114,7 +119,15 @@ String Ptv::calculateSignature(String queryPath, const char * apiKey)
   // Convert hash buffer to PTV API ref specific signature string
   String result;
   for (unsigned char hashBit : hashResult) {
-    result += String(hashBit, HEX);
+
+    // Workaround for String() to HEX:
+    // When a value smaller than 0x0f, it will not append 0 to it, which may causes error.
+    if(hashBit <= 0xf) {
+      result += "0";
+      result += String(hashBit, HEX);
+    } else {
+      result += String(hashBit, HEX);
+    }
   }
 
   // ...be aware that they are case sensitive
