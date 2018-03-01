@@ -9,7 +9,7 @@ class SntpTime
 {
  public:
   static bool setTime();
-  static time_t parseIsoTimeStr(String timeStr);
+  static time_t parseTimeStr(String timeStr);
   static struct std::tm parseTimeStrToTm(String timeStr);
 };
 

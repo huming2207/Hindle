@@ -19,7 +19,7 @@ bool SntpTime::setTime()
                HINDLE_NTP_SERVER_1);
 }
 
-time_t SntpTime::parseIsoTimeStr(String timeStr)
+time_t SntpTime::parseTimeStr(String timeStr)
 {
   if(!timeStr) {
     return 0;

@@ -25,7 +25,7 @@ transport_t Ptv::fetchTransportInfo()
   // Grab the signature out, thanks.
   String signature = calculateSignature(queryPath, HINDLE_API_PTV_KEY);
 
-  // Now it should be "/v3/departures/route_type/0/stop/11101?devid=100100"
+  // Now it should be "/v3/departures/route_type/0/stop/11101?devid=HINDLE_API_PTV_ID"
   String fullUrl = String(HINDLE_API_PTV_BASE)
                       + queryPath
                       + "&signature="
