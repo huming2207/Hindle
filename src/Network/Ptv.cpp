@@ -36,7 +36,7 @@ transport_t Ptv::fetchTransportInfo()
   if(httpStatus < 0) {
     log_e("Error: failed to access PTV API, return code %d!", httpStatus);
     httpClient.end();
-    transport_t transportInfo = { .hasDisruption = false, .isSuccess = false };
+    transport_t transportInfo{};
     return transportInfo;
   }
 
@@ -50,7 +50,7 @@ transport_t Ptv::fetchTransportInfo()
     log_e("Error: JSON data corrupted.");
     httpClient.end();
     jsonBuffer.clear();
-    transport_t transportInfo = { .hasDisruption = false, .isSuccess = false };
+    transport_t transportInfo{};
     return transportInfo;
   }
 
@@ -68,12 +68,12 @@ transport_t Ptv::fetchTransportInfo()
 
 
   transport_t transportInfo = {
-      .hasDisruption = (jsonObject["disruptions"].as<JsonArray&>().size() > 0),
       .isSuccess = (jsonObject["status"]["health"].as<int>() == 1),
-      .firstTime = SntpTime::parseIsoTimeStrToTm(firstTimeStr),
-      .secondTime = SntpTime::parseIsoTimeStrToTm(secondTimeStr),
+      .hasDisruption = (jsonObject["disruptions"].as<JsonArray&>().size() > 0),
       .firstPlatform = (uint8_t)jsonObject["departures"][0]["platform_number"].as<unsigned short>(),
       .secondPlatform = (uint8_t)jsonObject["departures"][1]["platform_number"].as<unsigned short>(),
+      .firstTime = SntpTime::parseIsoTimeStrToTm(firstTimeStr),
+      .secondTime = SntpTime::parseIsoTimeStrToTm(secondTimeStr),
   };
 
   httpClient.end();

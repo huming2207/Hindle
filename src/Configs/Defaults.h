@@ -18,6 +18,4 @@
  */
 #define HINDLE_DEFAULT_LOCATION "melbourne,au"
 
-
-
 #endif //HINDLE_DEFAULTS_H

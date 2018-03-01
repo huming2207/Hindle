@@ -9,7 +9,8 @@ class SntpTime
 {
  public:
   static bool setTime();
-  static time_t parseIsoTimeStr(const char *timeStr);
+  static time_t parseIsoTimeStr(String timeStr);
+  static struct std::tm parseIsoTimeStrToTm(String timeStr);
 };
 
 #endif //HINDLE_TIMEHELPER_H

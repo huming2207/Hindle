@@ -5,7 +5,7 @@
 #include <Arduino.h>
 #include <U8g2lib.h>
 #include <UI/UIHelper.h>
-#include <Network/Time.h>
+#include <Network/SntpTime.h>
 #include <WiFi.h>
 #include <Network/Weather.h>
 #include <Configs/APIs.h>

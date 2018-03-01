@@ -2,6 +2,7 @@
 // Created by Ming Hu on 14/2/18.
 //
 #include <ctime>
+#include <Network/Ptv.h>
 
 #include "UIHelper.h"
 #include "Network/Weather.h"
@@ -53,3 +54,17 @@ void UIHelper::updateWeather(weather_t *weather)
   u8g2->sendBuffer();
 }
 
+void UIHelper::updatePtv(transport_t *transport)
+{
+  char timeBuf[60] = {'\0'};
+
+  u8g2->setFont(u8g2_font_wqy12_t_gb2312);
+  u8g2->setCursor(0,40);
+  u8g2->printf("Platform %d", transport->firstPlatform);
+  u8g2->setCursor(0,53);
+
+  strftime(timeBuf, 60, "at %D %R", &transport->firstTime);
+  u8g2->print(timeBuf);
+
+  u8g2->sendBuffer();
+}

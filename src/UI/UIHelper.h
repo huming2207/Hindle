@@ -6,6 +6,7 @@
 #define HINDLE_UIHELPER_H
 
 #include <U8g2lib.h>
+#include "Network/Ptv.h"
 #include "Network/Weather.h"
 
 class UIHelper
@@ -14,8 +15,11 @@ class UIHelper
   void init(U8G2_IL3820_V2_296X128_F_4W_SW_SPI *main_u8g2);
   void updateSyncTime();
   void updateWeather(weather_t *weather);
+  void updatePtv(transport_t *transport);
  private:
   U8G2_IL3820_V2_296X128_F_4W_SW_SPI *u8g2;
+
+
 };
 
 #endif //HINDLE_UIHELPER_H
